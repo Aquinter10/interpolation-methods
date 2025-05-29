@@ -42,18 +42,18 @@ export function splineCubico(points) {
       `f${i}(x) = ${a[i].toFixed(4)} + ${b[i].toFixed(4)}(x-${xs[i]}) + ${c[i].toFixed(4)}(x-${xs[i]})² + ${d[i].toFixed(4)}(x-${xs[i]})³, para x ∈ [${xs[i]}, ${xs[i + 1]}]`,
   }));
 
-  const evaluate = (x) => {
+  const fn = (x) => {
     for (const s of splines) {
       if (x >= s.x0 && x <= s.x1) {
         const dx = x - s.x0;
         return s.a + s.b * dx + s.c * dx * dx + s.d * dx * dx * dx;
       }
     }
-    return null;
+    return null; // or NaN
   };
 
   return {
-    evaluate,
     polyString: splines.map(s => s.toString()).join(' '),
+    fn
   };
 }

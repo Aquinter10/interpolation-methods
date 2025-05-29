@@ -3,18 +3,28 @@ import DataInput from './components/DataInput';
 import Graph from './components/Graph';
 import PolynomialDisplay from './components/PolynomialDisplay';
 import Report from './components/Report';
+import { generateText } from './components/CompareMethods';
 import { lagrangeInterpolante } from './methods/lagrange';
 import { vandermondeInterpolante } from './methods/vandermonde';
 import { newtonInterpolante } from './methods/newton';
 import { splineLineal } from './methods/splineLineal';
 import { splineCubico } from './methods/splineCubico';
-
+import './App.css'
 
 export default function App() {
   const [points, setPoints] = useState([]);
   const [polynomial, setPolynomial] = useState('');
   const [evaluateFn, setEvaluateFn] = useState(null);
   const [method, setMethod] = useState('lagrange');
+  const [input, setInput] = useState('');
+  const [output, setOutput] = useState('');
+
+  const handleSubmit = async () => {
+    let tempinput = `Usando los puntos ${JSON.stringify(points)} compara con los siguientes metodos de interpolacion cual es la mejor opcion: Lagrange, newton, spline cubico, spline lineal y vandermonde. Finalmente dime los beneficios de haber usado el metodo ${method} para la interpolacion de los puntos si mi resultado fue el polinomio ${polynomial}. Trata de no extenderte mucho. No mas de 100 palabras y no uses ningun formato de texto.`;
+    setInput(tempinput);
+    const result = await generateText(input);
+    setOutput(result);
+  };
 
   const handleCalculate = () => {
     if (points.length === 0) return;
@@ -76,6 +86,17 @@ export default function App() {
 
       {evaluateFn && <Graph points={points} evaluate={evaluateFn} />}
       {polynomial && <PolynomialDisplay polyString={polynomial} />}
+
+      { points && (
+        <div className="p-4">
+          <h3 className="text-2xl font-bold">Comparar metodos</h3>
+          <button onClick={handleSubmit} className="mt-2 px-4 py-2 bg-blue-500 text-white">comparar</button>
+          <div className="mt-4 border p-2">{output}</div>
+          <br></br>
+        </div>
+        
+      )}
+
       <Report points={points} />
 
       <br></br>

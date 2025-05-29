@@ -1,6 +1,7 @@
 import React from 'react';
 import { Chart, LineElement, PointElement, LinearScale, Title, CategoryScale } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import '../App.css'
 
 Chart.register(LineElement, PointElement, LinearScale, Title, CategoryScale);
 
@@ -49,5 +50,10 @@ export default function Graph({ points, evaluate }) {
     },
   };
 
-  return <Line data={data} options={options} />;
+  return (
+  <div className="graph-container">
+    <Line data={data} options={options} />
+  </div>
+  );
+
 }
