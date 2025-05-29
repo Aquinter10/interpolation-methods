@@ -77,6 +77,11 @@ export default function App() {
       {evaluateFn && <Graph points={points} evaluate={evaluateFn} />}
       {polynomial && <PolynomialDisplay polyString={polynomial} />}
       <Report points={points} />
+
+      <br></br>
+      <div className="button-group">
+        <a href="https://aquinter10.github.io/proyecto-analisis-numerico/" className="button">Go back Home</a>
+      </div>
     </div>
   );
 }
